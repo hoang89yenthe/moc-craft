@@ -2,7 +2,6 @@
 
 import React, { use, useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 import { 
   ArrowLeft, Check, Sparkles, Star, Loader2, X, ArrowRight,
   Maximize2, Scissors, PenTool, ClipboardCheck, PhoneCall, HelpCircle

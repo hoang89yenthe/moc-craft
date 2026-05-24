@@ -1,12 +1,25 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircle2, Home, Sparkles, ShoppingBag, PhoneCall, Copy, Check } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function ThankYouPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex flex-col min-h-screen bg-[#FDFBF7] text-[#2D2D2D] items-center justify-center py-16 px-4">
+        <div className="w-8 h-8 border-2 border-[#7D8C77] border-t-transparent rounded-full animate-spin"></div>
+        <span className="text-sm mt-3 text-gray-500">Đang tải trang cảm ơn...</span>
+      </div>
+    }>
+      <ThankYouPageContent />
+    </Suspense>
+  );
+}
+
+function ThankYouPageContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get('order_id');
   
