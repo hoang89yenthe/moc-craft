@@ -1,7 +1,10 @@
 import Stripe from 'stripe';
 
 const stripeSecretKey = process.env.STRIPE_TEST_SECRET_KEY;
-const isMockMode = !stripeSecretKey || stripeSecretKey.includes('Mocked') || stripeSecretKey === 'sk_test_...';
+const isMockMode = !stripeSecretKey || 
+                   stripeSecretKey.toLowerCase().includes('mock') || 
+                   stripeSecretKey === 'sk_test_...' || 
+                   stripeSecretKey.length < 30;
 
 let stripeClient = null;
 if (!isMockMode) {
