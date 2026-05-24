@@ -1,0 +1,41 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Order {
+  id               String   @id @default(uuid())
+  customerName     String
+  phoneNumber      String
+  deliveryAddress  String
+  productVariant   String   // e.g., "Taplo_8cm" or "Desk_12cm"
+  amount           Float    // Total amount in VND
+  paymentStatus    String   // "PENDING", "PAID", "FAILED"
+  stripeSessionId  String?  @unique
+  createdAt        DateTime @default(now())
+}
+
+model Product {
+  id            String   @id @default(uuid())
+  name          String
+  desc          String
+  bestSeller    Boolean  @default(false)
+  image         String   // Main image URL
+  height        String   // Chiều cao tượng, e.g. "21cm"
+  width         String   // Chiều ngang, e.g. "12.5cm"
+  materials     String   // Nguyên liệu, e.g. "Len Susan family 4, Len Milk 125g"
+  crochetHook   String   // Kim móc, e.g. "Fanshi 2.5mm"
+  features      String   // Đặc điểm sản phẩm (phân cách bằng dấu chấm phẩy ;)
+  createdBy     String   @default("Hằng Phạm - Mộc Craft")
+  detailFace    String   @default("Khuôn mặt hiền từ, đường nét tinh xảo")
+  detailRobe    String   @default("Y áo tỉ mỉ, viền kim tuyến sang trọng")
+  detailHand    String   @default("Tay cầm hoa sen thanh tịnh")
+  detailQuality String   @default("Từng chi tiết được móc chắc chắn")
+  variantsJson  String   // Mảng JSON các phân loại kích thước/giá bán
+  createdAt     DateTime @default(now())
+}
+
