@@ -29,13 +29,13 @@ const getVariantDescription = (variant) => {
  * @param {Object} order - Đơn hàng vừa tạo
  * @param {string} frontendUrl - URL của Frontend để quay lại sau khi thanh toán
  */
-export const createCheckoutSession = async (order, frontendUrl) => {
+export const createCheckoutSession = async (order, frontendUrl, backendUrl) => {
   if (isMockMode) {
     console.log(`[Stripe Mock Mode] Tạo mock checkout session cho Order ID: ${order.id}`);
-    // Trả về mock URL dẫn đến endpoint giả lập thanh toán của backend
+    const apiBaseUrl = backendUrl || `http://localhost:${process.env.PORT || 5050}`;
     return {
       id: `mock_session_${order.id}`,
-      url: `http://localhost:${process.env.PORT || 5050}/api/orders/mock-pay/${order.id}`,
+      url: `${apiBaseUrl}/api/orders/mock-pay/${order.id}`,
       isMock: true
     };
   }

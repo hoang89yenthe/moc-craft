@@ -95,6 +95,7 @@ describe('Order API Unit/Integration Tests', () => {
       // Verify Stripe session helper was called
       expect(stripeService.createCheckoutSession).toHaveBeenCalledWith(
         createdOrder,
+        expect.any(String),
         expect.any(String)
       );
 

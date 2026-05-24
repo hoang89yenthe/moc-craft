@@ -81,7 +81,13 @@ export const createOrder = async (req, res) => {
 
     // 2. Tạo Stripe checkout session
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
-    const session = await stripeService.createCheckoutSession(order, frontendUrl);
+    
+    // Tự động xác định domain của backend từ request để Mock Pay hoạt động trên production
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+    const host = req.get('host');
+    const backendUrl = `${protocol}://${host}`;
+
+    const session = await stripeService.createCheckoutSession(order, frontendUrl, backendUrl);
 
     // 3. Cập nhật stripeSessionId vào đơn hàng
     const updatedOrder = await prisma.order.update({
